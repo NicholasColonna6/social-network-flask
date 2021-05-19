@@ -13,8 +13,8 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = 0
 db = SQLAlchemy(app)
 
 # Models - ORM
-class Post(db.Model):
-    __tablename__ = "user"
+class Posts(db.Model):
+    __tablename__ = "posts"
     id = db.Column(db.Integer, primary_key=True, autoincrement='auto')
     name = db.Column(db.String(50), nullable=False)
     content = db.Column(db.String(140), nullable=False)
@@ -26,15 +26,19 @@ def index():
 		pass
 
 	if request.method == "POST":
-		new_post = Post(
-			name = request.form.get('name')
-			content = request.form.get('post')
+		new_post = Posts(
+			name = request.form.get('name'),
+			content = request.form.get('post'),
 		)
 		db.session.add(new_post)
 		db.session.commit()
 		#create_post(name, post)
 
-	pots = Post.query.all()
+	posts = Posts.query.all()
 	#posts = get_posts()
 
-	return render_template('index.html', posts=posts)
+	return render_template('index.html', posts=posts)	# looks into templates folder, finds the index.html file, and loads the template
+
+
+if __name__ == '__main__':
+	app.run(debug=True)
