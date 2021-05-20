@@ -32,13 +32,16 @@ def index():
 		)
 		db.session.add(new_post)
 		db.session.commit()
-		#create_post(name, post)
 
 	posts = Posts.query.all()
-	#posts = get_posts()
 
 	return render_template('index.html', posts=posts)	# looks into templates folder, finds the index.html file, and loads the template
 
+# TO DO
+# Ensure blank entries are not added to the database (Name and Content cannot be None/Null)
+# Create the ability to edit a post
+# Create a nicer looking template
+# Order posts from most recent to last 
 
 if __name__ == '__main__':
 	app.run(debug=True)
