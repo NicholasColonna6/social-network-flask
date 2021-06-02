@@ -33,17 +33,23 @@ def index():
         db.session.add(new_post)
         db.session.commit()
 
-    # Not working yet! HTML does not have a delete form action. Need to figure out how to differentiate a delete request with a post request and update HTML
-    if request.method == "DELETE":
-        post_id = request.form.get('postID')
-        print(post_id)
-        post_to_delete = Posts.query.filter_by(id='post_id').first()
-        db.session.delete(post_to_delete)
-        db.session.commit()
-
     posts = Posts.query.all()
 
     return render_template('index.html', posts=posts)   # looks into templates folder, finds the index.html file, and loads the template
+
+# Delete a single post on the social media page
+@app.route("/delete_post/", methods=['POST'])
+def delete_post():
+    post_id = request.form.get('postID')
+    print(post_id)
+    post_to_delete = Posts.query.filter_by(id=post_id).first()
+    db.session.delete(post_to_delete)
+    db.session.commit()
+
+    posts = Posts.query.all()
+
+    return render_template('index.html', posts=posts)   
+
 
 # TO DO
 # Ensure blank entries are not added to the database (Name and Content cannot be None/Null)
