@@ -7,10 +7,10 @@
 			<input type="submit" value="Submit">
 		</form>
 		{% for post in posts %}
-		<div> {{post['name'] + ': ' + post['content'] }} </div>
-		<form action='/' method='delete'>
-			<input type="hidden" name="postID" value={{post['id']}}>
-			<input type="submit" value="Delete">
+		<div> {{ post['name'] + ': ' + post['content'] }} </div>
+		<form action='/delete_post/' method='post'>
+			<input type="hidden" name="postID" value={{ post['id'] }}>
+			<button name="delete_post" type="submit">Delete</button>
 		</form>
 		{% endfor %}
 	</body>
